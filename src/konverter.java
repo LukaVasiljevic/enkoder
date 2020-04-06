@@ -93,36 +93,21 @@ public class konverter extends JFrame{
             public void actionPerformed(ActionEvent actionEvent) {
                 if(!decTxt.getText().equals(""))
                 {
-                    File dat = new File("ispis.txt");
-                    FileOutputStream fout = null;
-                    try
-                    {
-                        fout = new FileOutputStream(dat);
-                    }
-                    catch(FileNotFoundException e)
-                    {
-                        System.out.println("datoteke nema");
-                    }
-                    try
-                    {
-                        String izlaz = decTxt.getText();
-                        for (char k :izlaz.toCharArray())
-                        {
-                            fout.write(k);
-                        }
-                    }
-                    catch(IOException e)
-                    {
-                        System.out.println("greska u radu s datotekom");
-                    }
                     try {
-                        fout.close();
-                        decTxt.setText("");
-                        JOptionPane.showMessageDialog(osnovniProzor, "Текст је сачуван!", "Обавештење",
-                                JOptionPane.PLAIN_MESSAGE);
+                        OutputStream outputStream = new FileOutputStream("izlaz.txt");
+                        OutputStreamWriter osw = new OutputStreamWriter(outputStream, (String)decCB.getSelectedItem());
+                        for (char k: decTxt.getText().toCharArray())
+                        {
+                                osw.write(k);
+                                System.out.println(k);
+                        }
+
+                        osw.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    JOptionPane.showMessageDialog(osnovniProzor, "Текст је сачуван!", "Обавештење",
+                           JOptionPane.PLAIN_MESSAGE);
                 }
                 else
                     JOptionPane.showMessageDialog(osnovniProzor, "Поље је празно!",
